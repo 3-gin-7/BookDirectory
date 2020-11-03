@@ -1,0 +1,12 @@
+*, html{
+    margin:0px;
+    padding:0px;
+    box-sizing:border-box;
+}
+
+header{
+    min-height:100px;
+    display:flex;
+    flex-direction:row;
+    justify-content:space-evenly;
+}
