@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "41FeP0jTRtWDQ8AQgo2JHQa38j0K0iJKoyc75Sr+xdGO8Lx9pgOprCiRJzP2QTuaICuGGGG4hUaOZtj/GNJyDg==",
+  "success": true,
+  "projectFilePath": "/home/gin/Documents/Coding/FullStack/BookDirectory/Server/Server.csproj",
+  "expectedPackageFiles": [
+    "/home/gin/.nuget/packages/microsoft.aspnetcore.app.ref/6.0.2/microsoft.aspnetcore.app.ref.6.0.2.nupkg.sha512"
+  ],
+  "logs": []
+}
