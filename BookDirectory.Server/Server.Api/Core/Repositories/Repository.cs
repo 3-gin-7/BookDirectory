@@ -18,19 +18,20 @@ public class Repository<T> : IRepository<T> where T : class
         return true;
     }
 
-    public Task<IEnumerable<T>> All()
+    public async Task<IEnumerable<T>> All()
     {
-        throw new NotImplementedException();
+        return await dbSet.ToListAsync();
     }
 
-    public Task<bool> Delete()
+    public bool Delete(T entity)
     {
-        throw new NotImplementedException();
+        dbSet.Remove(entity);
+        return true;
     }
 
-    public Task<T> GetById(Guid id)
+    public async Task<T?> GetById(Guid id)
     {
-        throw new NotImplementedException();
+        return await dbSet.FindAsync(id);
     }
 
     public Task<bool> Update(T entity)
