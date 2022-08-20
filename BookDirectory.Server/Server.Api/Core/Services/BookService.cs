@@ -8,16 +8,19 @@ namespace Server.Api.Core.Services;
 public class BookService : IBookService
 {
     private readonly IBookRepository _bookRepo;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public BookService(IBookRepository bookRepo)
+    public BookService(IBookRepository bookRepo, IUnitOfWork unitOfWork)
     {
         _bookRepo = bookRepo;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<BookResponse> AddBook(Book book)
     {
         try{
             await _bookRepo.Add(book);
+            await _unitOfWork.CompleteAsync();
             return new BookResponse(book, "Book Added", ResponseStatusEnum.Success);
         }catch(Exception e){
             return new BookResponse(null, "Failed to Add book", ResponseStatusEnum.Failure, e.Message);
@@ -31,6 +34,7 @@ public class BookService : IBookService
             var book = await _bookRepo.GetById(id);
             if(book is null) return new BookResponse(null, "Failed to delete the book", ResponseStatusEnum.Failure, "Book not found");
             _bookRepo.Delete(book);
+            await _unitOfWork.CompleteAsync();
             return new BookResponse(book, "Book Deleted", ResponseStatusEnum.Success);
         }
         catch (Exception e)

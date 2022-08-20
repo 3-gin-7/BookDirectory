@@ -7,11 +7,8 @@ public class UnitOfWork : IUnitOfWork
 {
     private readonly BookDbContext _bookDbContext;
 
-    public IBookRepository Books { get; init; }
-
     public UnitOfWork(BookDbContext bookDbContext){
         _bookDbContext = bookDbContext;
-        Books = new BookRepository(_bookDbContext);
     }
 
     public async Task CompleteAsync()

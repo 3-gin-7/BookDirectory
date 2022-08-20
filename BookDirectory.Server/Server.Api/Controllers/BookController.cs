@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Server.Api.Core.Interfaces;
 using Server.Api.Models;
+using Server.Api.Responses;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Server.Api.Controllers;
@@ -9,22 +10,30 @@ namespace Server.Api.Controllers;
 [Route("[controller]/[action]")]
 [Produces("application/json")]
 public class BookController : ControllerBase{
-    private readonly IUnitOfWork _unitOfWork;
+    private readonly IBookService _bookService;
 
-    public BookController(IUnitOfWork unitOfWork){
-        _unitOfWork = unitOfWork;
+    public BookController(IBookService bookService){
+        _bookService = bookService;
     }
 
+    [SwaggerOperation(
+            Summary = "Adding the book",
+            Description = "Adds the book to the database"
+            )]
+    [SwaggerResponse(200, "Book added", typeof(BookResponse))]
+    [SwaggerResponse(400, "Failed to add book", typeof(BadRequestResult))]
     [HttpPost]
-    public void AddBook(Book book){
-        _unitOfWork.Books.Add(book);
+    public async Task<IActionResult> AddBook(Book book){
+        return Ok(await _bookService.AddBook(book));
     }
 
     [HttpGet("{id:guid}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public void GetBook(Guid id){}
-    
+    public async Task<IActionResult> GetBook(Guid id){
+        return Ok(await _bookService.GetBook(id));
+    }
+
     [SwaggerOperation(
         Summary = "summary",
         Description = "description"

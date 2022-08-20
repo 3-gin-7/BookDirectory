@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Server.Api.Core.Interfaces;
 using Server.Api.Core.Repository;
+using Server.Api.Core.Services;
 using Server.Api.Data;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,7 +22,9 @@ builder.Services.AddSwaggerGen(options =>{
 builder.Services.AddDbContext<BookDbContext>(opt => {
         opt.UseSqlServer(builder.Configuration.GetConnectionString("BookDbConnectionString"));
         });
-builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IBookRepository, BookRepository>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IBookService, BookService>();
 
 var app = builder.Build();
 
