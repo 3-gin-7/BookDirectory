@@ -34,8 +34,9 @@ public class Repository<T> : IRepository<T> where T : class
         return await dbSet.FindAsync(id);
     }
 
-    public Task<bool> Update(T entity)
+    public bool Update(T entity)
     {
-        throw new NotImplementedException();
+        dbSet.Update(entity);
+        return true;
     }
 }
